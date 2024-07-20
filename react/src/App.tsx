@@ -1,4 +1,4 @@
-import {useState } from 'react';
+import {useEffect, useState } from 'react';
 import './App.css'
 
 export interface AppProps {
@@ -15,7 +15,12 @@ export default function App() {
 
 function CounterGame() {
   const [counter, setCounter] = useState(0);
-  getScore();
+
+  // Use useEffect for the initial render of the CounterGame component so that getScore isn't called
+  // each time that the component is rendered.
+  useEffect(() => {
+    getScore();
+  }, []);
 
   function getScore() {
     fetch('http://localhost:8080/getScore')
