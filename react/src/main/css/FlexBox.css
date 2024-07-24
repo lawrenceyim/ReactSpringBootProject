@@ -1,0 +1,35 @@
+.eventList {
+    display: flex;
+    flex-direction: column;
+}
+
+.eventList h1 {
+    align-self: center;
+    font-size: 60px;
+    margin: 5px;
+}
+
+.eventSlot {
+    background-color: rgb(236, 255, 255);
+    border-color: blue;
+    border-width: 2px;
+    border-style: solid;
+    margin-bottom: 5px;
+
+    min-height: 200px;
+    min-width: 100%;
+    color: black;
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.eventSlot h2 {
+    font-size: 30px;
+    margin: 10px;
+}
+
+.eventSlot p {
+    font-size: 20px;
+    margin: 10px;
+}
