@@ -1,0 +1,8 @@
+.counterButton {
+    transition: background-color 1s ease, color .5s ;
+}
+
+.counterButton:hover {
+    background-color: blue;
+    color: white;
+}

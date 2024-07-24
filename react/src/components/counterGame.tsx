@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import '../css/counterGame.css';
 export function CounterGame() {
     const [counter, setCounter] = useState(0);
   
@@ -24,7 +24,7 @@ export function CounterGame() {
   
     return <>
       <h1>{counter}</h1>
-      <button onClick={increaseCounter}>Increase Counter</button>
+      <button className="counterButton" onClick={increaseCounter}>Increase Counter</button>
     </>
   }
   
