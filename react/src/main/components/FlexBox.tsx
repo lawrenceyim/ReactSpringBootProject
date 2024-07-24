@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../css/FlexBox.css';
 
 interface CounterGameEvent {
@@ -8,46 +8,46 @@ interface CounterGameEvent {
 }
 
 export default function EventsList(): JSX.Element {
-    const [events, setEvents] = useState<CounterGameEvent[]>([ {
-        eventId: 1,
-        eventTitle: "eventTitle",
-        eventMessage:  `eventMessage adsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfa
-        adsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfa 
-        adsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfaadsfa `
-    }]);
-    const numberOfSlots = 5;
-    const eventSlots: JSX.Element[] = [];
+    const [events, setEvents] = useState<CounterGameEvent[]>([]);
 
-    function AddEvent(eventId: number, eventTitle: string, eventMessage: string) {
-        const newEvents = events;
-        const newEvent: CounterGameEvent = {
-            eventId: eventId,
-            eventTitle: eventTitle,
-            eventMessage: eventMessage
+    // Call event once to initialize events list. \
+    // Replace this logic later
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('http://localhost:8080/getEvents');
+            if (!response.ok) {
+                throw new Error('Network response was not OK');
+            }
+            const data = await response.json();
+            if (Array.isArray(data.events)) {
+                setEvents(data.events);
+            }
         }
-        newEvents.unshift(newEvent);
-        if (newEvents.length > numberOfSlots) {
-            newEvents.pop();
-        }
-        setEvents(newEvents);
-    }
 
-    for (let i = 0; i < events.length; i++) {
-        eventSlots.push(<EventSlot {...events[i]}/>);
-    }
-    for (let i = 0; i < numberOfSlots - events.length; i++) {
-        eventSlots.push(<EventSlot {...{} as CounterGameEvent}/>);
-    }
+        fetchData();
+    }, []);
 
     return <div className="eventList">
         <h1>Events</h1>
-        <div >
-            {eventSlots}
+        <div>
+            {events.map(event => (
+                <EventSlot
+                    key={event.eventId}
+                    eventTitle={event.eventTitle}
+                    eventMessage={event.eventMessage}
+                />
+            ))}
         </div>
     </div>;
 }
 
-function EventSlot(prop: CounterGameEvent): JSX.Element {
+interface EventSlotProps {
+    key: number
+    eventTitle: string;
+    eventMessage: string;
+}
+
+function EventSlot(prop: EventSlotProps): JSX.Element {
     return <div className="eventSlot">
         <h2>{prop.eventTitle}</h2>
         <p>{prop.eventMessage}</p>

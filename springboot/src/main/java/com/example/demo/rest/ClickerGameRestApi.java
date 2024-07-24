@@ -20,4 +20,10 @@ public class ClickerGameRestApi {
     public String GetScore() {
         return JsonConverter.ConvertIntegerToJson("score", App.GetClickerGame().GetScore());
     }
+
+    @GetMapping("/getEvents")
+    @CrossOrigin(origins = "*")
+    public String GetEvents() {
+        return App.GetClickerGame().GetEventsJson();
+    }
 }
