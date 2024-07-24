@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import '../css/counterGame.css';
+import '../css/CounterGame.css';
+
 export function CounterGame() {
     const [counter, setCounter] = useState(0);
   

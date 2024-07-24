@@ -1,5 +1,5 @@
 import './App.css'
-import { CounterGame } from './components/counterGame';
+import { CounterGame } from './CounterGame'
 
 export default function App() {
   return (
