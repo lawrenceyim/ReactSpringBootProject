@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import '../css/FlexBox.css';
+import React from "react";
 
+// For least pain, make sure the interface keys match the JSON message keys
 interface CounterGameEvent {
-    eventId: number,
-    eventTitle: string,
-    eventMessage: string
+    id: number,
+    title: string,
+    message: string
 }
 
 export default function EventsList(): JSX.Element {
     const [events, setEvents] = useState<CounterGameEvent[]>([]);
 
-    // Call event once to initialize events list. \
+    // Call event once to initialize events list. 
     // Replace this logic later
     useEffect(() => {
         const fetchData = async () => {
@@ -18,10 +20,8 @@ export default function EventsList(): JSX.Element {
             if (!response.ok) {
                 throw new Error('Network response was not OK');
             }
-            const data = await response.json();
-            if (Array.isArray(data.events)) {
-                setEvents(data.events);
-            }
+            const data = await response.text();
+            setEvents(ParseData(data));
         }
 
         fetchData();
@@ -32,24 +32,23 @@ export default function EventsList(): JSX.Element {
         <div>
             {events.map(event => (
                 <EventSlot
-                    key={event.eventId}
-                    eventTitle={event.eventTitle}
-                    eventMessage={event.eventMessage}
+                    key={event.id}
+                    {...event}
                 />
             ))}
         </div>
     </div>;
 }
 
-interface EventSlotProps {
-    key: number
-    eventTitle: string;
-    eventMessage: string;
+function EventSlot(prop: CounterGameEvent): JSX.Element {
+    return <>
+        <div className="eventSlot">
+            <h2>{prop.title}</h2>
+            <p>{prop.message}</p>
+        </div>
+    </>;
 }
 
-function EventSlot(prop: EventSlotProps): JSX.Element {
-    return <div className="eventSlot">
-        <h2>{prop.eventTitle}</h2>
-        <p>{prop.eventMessage}</p>
-    </div>;
+function ParseData(data: string): CounterGameEvent[] {
+    return JSON.parse(data).events;
 }
