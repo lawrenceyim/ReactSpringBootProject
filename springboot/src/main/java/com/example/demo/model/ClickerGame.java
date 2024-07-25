@@ -31,8 +31,8 @@ public class ClickerGame {
 
     public String GetEventsJson() {
         StringBuilder sb = new StringBuilder();
-        events.forEach(event -> sb.append(event.ToJson() + ","));
-        if (sb.length() > 0) {
+        events.forEach(event -> sb.append(event.ToJson()).append(","));
+        if (!sb.isEmpty()) {
             sb.deleteCharAt(sb.length() - 1);
         }
         return """ 
