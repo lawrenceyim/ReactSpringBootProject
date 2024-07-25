@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import '../css/FlexBox.css';
-import React from "react";
 
 // For least pain, make sure the interface keys match the JSON message keys
 interface CounterGameEvent {
