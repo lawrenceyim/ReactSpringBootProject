@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import '../css/FlexBox.css';
+import '../css/EventsList.css';
 
 // For least pain, make sure the interface keys match the JSON message keys
 interface CounterGameEvent {
@@ -25,6 +25,15 @@ export default function EventsList(): JSX.Element {
 
         fetchData();
     }, []);
+
+    if (events.length == 0) {
+        return <div className="eventList">
+            <h1>Events</h1>
+            <div>
+                <EventSlot key={"emptyEvent"} id={-1} title={"No events active"} message={""} />
+            </div>
+        </div>;
+    }
 
     return <div className="eventList">
         <h1>Events</h1>
